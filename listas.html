@@ -4,11 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Listas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
 </head>
+<button onclick="w3_open()" id="top">☰ MENU</button>
+<div class="w3-sidebar w3-bar-block w3-border-right" style="display:none" id="mySidebar">
+  <button onclick="w3_close()" class="w3-bar-item w3-large">Close &times;</button>
+  <a class="w3-bar-item w3-button" href="#Listas">Listas</a>
+  <a class="w3-bar-item w3-button" href="#ol">ol</a>
+  <a class="w3-bar-item w3-button" href="#ul">ul</a>
+  <a class="w3-bar-item w3-button" href="#dl">dl</a>
+  <a class="w3-bar-item w3-button" href="#Nested">NESTED LISTS </a>
+</div>
+<div class="container"> 
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom"> 
+        <div class="col-md-3 mb-2 mb-md-0"> 
+            <a href="index.html" class="d-inline-flex link-body-emphasis text-decoration-none"> 
+                <img src="img/LOGO.svg" alt="" height="80px">
+            </a> 
+        </div> 
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0"> 
+            <li><a href="index.html" class="nav-link px-2 link-secondary">Home</a>
+            </li> <li><a href="#" class="nav-link px-2">Features</a>
+            </li> <li><a href="#" class="nav-link px-2">Pricing</a>
+            </li> <li><a href="#" class="nav-link px-2">FAQs</a>
+            </li> <li><a href="#" class="nav-link px-2">About</a>
+            </li> </ul> <div class="col-md-3 text-end"> 
+                <button type="button" class="btn btn-outline-primary me-2">Login</button> 
+                <button type="button" class="btn btn-primary">Sign-up</button> 
+            </div> 
+        </header> 
+    </div>
 <body>
-    <h1>LISTAS</h1>
+    <h1 id="Listas">LISTAS</h1>
     <div>
-        <h1>&lt; ol &gt;</h1>
+        <h1 id="ol">&lt; ol &gt;</h1>
             <ol>
                 <li>Chop potatoes into quarters</li>
                 <li>Simmer in salted water for 15-20
@@ -19,7 +49,7 @@
             </ol>
     </div>
     <div>
-        <h1>&lt; ul &gt;</h1>
+        <h1 id="ul">&lt; ul &gt;</h1>
             <ul>
                 <li>1kg King Edward potatoes</li>
                 <li>100ml milk</li>
@@ -29,7 +59,7 @@
             </ul>
     </div>
     <div>
-        <h1>&lt; dl &gt;</h1>
+        <h1 id="dl">&lt; dl &gt;</h1>
             <dl>
                 <dt>Sashimi</dt>
                 <dd>Sliced raw fish that is served with 
@@ -48,7 +78,7 @@
             </dl>
     </div>
     <div>
-        <h1> NESTED LISTS </h1>
+        <h1 id="Nested"> NESTED LISTS </h1>
             <ul>
                 <li>Mousses</li>
                 <li>Pastries
@@ -62,5 +92,15 @@
                 <li>Tarts</li>
             </ul>
     </div>
+<a href="#top">top</a>
+<script>
+function w3_open() {
+  document.getElementById("mySidebar").style.display = "block";
+}
+
+function w3_close() {
+  document.getElementById("mySidebar").style.display = "none";
+}
+</script>
 </body>
 </html>

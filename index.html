@@ -5,7 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
 </head>
+<button onclick="w3_open()" id="top">☰ MENU</button>
+<div class="w3-sidebar w3-bar-block w3-border-right" style="display:none" id="mySidebar">
+  <button onclick="w3_close()" class="w3-bar-item w3-large">Close &times;</button>
+  <a class="w3-bar-item w3-button" href="#top">Practicas</a>
+  <a class="w3-bar-item w3-button" href="#Repositorio">>Repositorio</a>
+  <a class="w3-bar-item w3-button" href="#DiseñoAjustable">>Diseño ajustable</a>
+  <a class="w3-bar-item w3-button" href="#Listas">>Listas</a>
+  <a class="w3-bar-item w3-button" href="#Contenido">>Contenido de texto</a>
+  <a class="w3-bar-item w3-button" href="#Links">>Links</a>
+
+</div>
 <div class="container"> 
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom"> 
         <div class="col-md-3 mb-2 mb-md-0"> 
@@ -26,31 +38,7 @@
         </header> 
     </div>
 <body>
-    <main style="display: flex; justify-content: center;">
-        <aside id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-        <div class="position-sticky">
-            <ul class="nav flex-column">
-            <li class="nav-item">
-                <a class="nav-link active" href="#Practicas">Practicas</a>
-            </li>            
-            <li class="nav-item">
-                <a class="nav-link active" href="#Repositorio">>Repositorio</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#DiseñoAjustable">>Diseño ajustable</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#Listas">>Listas</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#Contenido">>Contenido de texto</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#Links">>Links</a>
-            </li>
-            </ul>
-        </div>
-        </aside>        
+    <main style="display: flex; justify-content: center;">    
         <img src="img/Imgmain.jpg" alt="" style="max-width:1000px;  width:100%;">
     </main>
     <div class="album py-5 bg-body-tertiary"> 
@@ -58,9 +46,9 @@
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3"> 
                 <div class="col"> 
                     <div class="card shadow-sm"> 
-                        <img src="img/p1.jpg" alt="">
+                        <img src="img/p1.jpg" alt="" id="Repositorio">
                         <div class="card-body"> 
-                            <h2 id="Repositorio">Repositorio</h2>
+                            <h2>Repositorio</h2>
                             <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p> 
                             <div class="d-flex justify-content-between align-items-center"> 
                                 <div class="btn-group"> 
@@ -78,9 +66,9 @@
                 </div> 
                 <div class="col"> 
                     <div class="card shadow-sm"> 
-                        <img src="img/p2.png" alt="">
+                        <img src="img/p2.png" alt="" id="DiseñoAjustable">
                         <div class="card-body"> 
-                            <h2 id="DiseñoAjustable">Diseño Ajustable</h2>
+                            <h2>Diseño Ajustable</h2>
                             <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p> 
                             <div class="d-flex justify-content-between align-items-center"> 
                                 <div class="btn-group"> 
@@ -98,9 +86,9 @@
                 </div>
                 <div class="col"> 
                     <div class="card shadow-sm"> 
-                        <img src="img/p3.png" alt="">
+                        <img src="img/p3.png" alt="" id="Listas">
                         <div class="card-body">
-                            <h2 id="Listas">Listas</h2>
+                            <h2>Listas</h2>
                             <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p> 
                             <div class="d-flex justify-content-between align-items-center"> 
                                 <div class="btn-group"> 
@@ -118,9 +106,9 @@
                 </div>
                 <div class="col"> 
                     <div class="card shadow-sm"> 
-                        <img src="img/p4.png" alt="">
+                        <img src="img/p4.png" alt="" id="Contenido">
                         <div class="card-body">
-                            <h2 id="Contenido">Contenido de texto</h2>
+                            <h2>Contenido de texto</h2>
                             <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p> 
                             <div class="d-flex justify-content-between align-items-center"> 
                                 <div class="btn-group"> 
@@ -138,9 +126,9 @@
                 </div>
                 <div class="col"> 
                     <div class="card shadow-sm"> 
-                        <img src="img/p5.svg" alt="">
+                        <img src="img/p5.svg" alt="" id="Links">
                         <div class="card-body">
-                            <h2 id="Links">Links</h2>
+                            <h2>Links</h2>
                             <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p> 
                             <div class="d-flex justify-content-between align-items-center"> 
                                 <div class="btn-group"> 
@@ -159,5 +147,14 @@
             </div> 
         </div>
     </div>
+<script>
+function w3_open() {
+  document.getElementById("mySidebar").style.display = "block";
+}
+
+function w3_close() {
+  document.getElementById("mySidebar").style.display = "none";
+}
+</script>
 </body>
 </html>
