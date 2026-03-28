@@ -28,7 +28,7 @@ function registroUsuarios(){
 	formData.append("nombre", name.val());
 	formData.append("email", email.val());
 	formData.append("pwd", password.val());
-	$.ajax({url: "/ajax-jquery/usuarios.php",
+	$.ajax({url: "/programacion-web-practicas/ajax-jquery/usuarios.php",
 		data: formData,
 		processData: false,
 		contentType: false,
