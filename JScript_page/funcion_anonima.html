@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/programacion-web-practicas/styles/style_index.css">
+</head>
+<body>
+
+<button class="btn btn-dark m-3 d-md-none" onclick="toggleSidebar()">
+    ☰ MENU
+</button>
+<div id="sidebar" class="sidebar">
+
+    <div class="p-3">
+        <span class="fs-5 fw-semibold">Menú</span>
+        <hr>
+
+        <ul class="list-unstyled">
+
+            <li>
+                <div class="collapse show" id="menu1">
+                    <ul class="list-unstyled small">
+                        <li class="mt-3"><a href="/programacion-web-practicas/index.html" class="btn btn-toggle w-100 text-start" data-bs-toggle="collapse" data-bs-target="#menu1">Inicio</a></li>
+                        <li><a href="/programacion-web-practicas/JScript_page/MenuScripts.html">Scripts</a></li>
+                    </ul>
+                </div>
+            </li>
+
+            <li class="mt-3">
+                <a href="/programacion-web-practicas/profile.html" class="btn w-100 text-start">Perfil</a>
+            </li>
+
+        </ul>
+    </div>
+</div>
+<!-- OVERLAY -->
+<div id="overlay" onclick="toggleSidebar()"></div>
+<div id="content"> 
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom"> 
+        <div class="col-md-3 mb-2 mb-md-0"> 
+            <a href="/programacion-web-practicas/index.html" class="d-inline-flex link-body-emphasis text-decoration-none"> 
+                <img src="/programacion-web-practicas/img/LOGO.svg" alt="" height="80px">
+            </a> 
+        </div> 
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0"> 
+            <li><a href="/programacion-web-practicas/index.html" class="nav-link px-2 link-secondary">Home</a>
+            </li> <li><a href="#" class="nav-link px-2">Features</a>
+            </li> <li><a href="#" class="nav-link px-2">Pricing</a>
+            </li> <li><a href="#" class="nav-link px-2">FAQs</a>
+            </li> <li><a href="#" class="nav-link px-2">About</a>
+            </li> </ul> <div class="col-md-3 text-end"> 
+                <button type="button" class="btn btn-outline-primary me-2">Login</button> 
+                <button type="button" class="btn btn-primary">Sign-up</button> 
+            </div> 
+        </header> 
+    <main>
+        <script type="text/javascript" src="scripts/funcion_anonima.js"></script>
+        <h1>Inspecciona la pagina y mira la magia en consola!</h1>
+        <p>En este ejemplo, myFunction` es una función anónima asignada a una variable y puede invocar esta función utilizando el nombre de la variable.</p>
+        <input type="text" id="resultado" placeholder="Resultado aquí" size="60px">
+        <button onclick="myFunction()">Mostrar consola</button>
+    </main>
+</div>
+<script src="/programacion-web-practicas/scripts/sidebar.js"></script>
+</body>
+</html>
