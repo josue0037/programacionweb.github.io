@@ -15,7 +15,7 @@ $(document).ready(function () {
         formData.append("imagen", imagen);
 
         $.ajax({
-            url: "slider.php?action=create", // IMPORTANTE
+            url: "../slider.php?action=create", // IMPORTANTE
             type: "POST",
             data: formData,
             processData: false,
@@ -68,7 +68,7 @@ $(document).ready(function () {
 //  CARGAR IMÁGENES
 function cargar() {
 
-    fetch("slider.php?action=read")
+    fetch("../slider.php?action=read")
     .then(res => res.json())
     .then(data => {
 
@@ -107,7 +107,7 @@ function editar(id, nombre) {
     formData.append("id", id);
     formData.append("nombre", nombre);
 
-    fetch("slider.php?action=update", {
+    fetch("../slider.php?action=update", {
         method: "POST",
         body: formData
     })
@@ -127,7 +127,7 @@ function eliminar(id) {
     let formData = new FormData();
     formData.append("id", id);
 
-    fetch("slider.php?action=delete", {
+    fetch("../slider.php?action=delete", {
         method: "POST",
         body: formData
     })
