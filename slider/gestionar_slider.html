@@ -66,11 +66,24 @@
 
 
 <main>
-    <input type="text" id="nombre" placeholder="Nombre">
+    <form id="formSlider" enctype="multipart/form-data">
 
-    <input type="file" id="imagen">
+        <div class="mb-3">
+            <label class="form-label">Nombre</label>
+            <input type="text" id="nombre" class="form-control" required>
+        </div>
 
-    <button onclick="crear()">Subir imagen</button>
+        <div class="mb-3">
+            <label class="form-label">Imagen</label>
+            <input type="file" id="imagen" class="form-control" accept="image/*" required>
+            <div class="invalid-feedback" id="imgError"></div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            Subir imagen
+        </button>
+
+    </form>
 
     <hr>
 

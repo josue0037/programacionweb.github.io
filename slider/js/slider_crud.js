@@ -1,82 +1,79 @@
-function crear() {
+$(document).ready(function () {
 
-    let nombre = document.getElementById("nombre").value;
-    let imagen = document.getElementById("imagen").files[0];
+    $("#formSlider").submit(function (e) {
 
-    let formData = new FormData();
-    formData.append("nombre", nombre);
-    formData.append("imagen", imagen);
+        e.preventDefault();
 
-    fetch("slider.php?action=create", {
-        method: "POST",
-        body: formData
-    })
-    .then(res => res.text())
-    .then(() => {
-        cargar();
-    });
-}
+        let nombre = $("#nombre");
+        let imagen = $("#imagen")[0].files[0];
 
-function cargar() {
+        let formData = new FormData();
+        formData.append("nombre", nombre.val());
+        formData.append("imagen", imagen);
 
-    fetch("slider.php?action=read")
-    .then(res => res.json())
-    .then(data => {
+        $.ajax({
+            url: "slider.php?action=create",
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            cache: false,
 
-        let html = "";
+            success: function (response) {
 
-        data.forEach(item => {
-            html += `
-                <div style="margin-bottom:20px;">
-                    <img src="${item.ruta}" width="200">
-                    <p>${item.nombre}</p>
+                response = response.trim();
 
-                    <button onclick="editar(${item.id}, '${item.nombre}')">
-                        Editar nombre
-                    </button>
+                // 🔴 Imagen duplicada
+                if (response === "imagen_duplicada") {
+                    $("#imagen").addClass("is-invalid");
+                    $("#imgError").text("Esta imagen ya existe.");
+                    return;
+                }
 
-                    <button onclick="eliminar(${item.id})">
-                        Eliminar
-                    </button>
-                </div>
-            `;
+                // 🔴 Tipo inválido
+                if (response === "tipo_no_valido") {
+                    $("#imagen").addClass("is-invalid");
+                    $("#imgError").text("Solo se permiten JPG, PNG o WEBP.");
+                    return;
+                }
+
+                // 🔴 Archivo grande
+                if (response === "archivo_grande") {
+                    $("#imagen").addClass("is-invalid");
+                    $("#imgError").text("La imagen es demasiado grande (máx 2MB).");
+                    return;
+                }
+
+                // 🔴 Error archivo
+                if (response === "error_archivo") {
+                    $("#imagen").addClass("is-invalid");
+                    $("#imgError").text("Error al subir la imagen.");
+                    return;
+                }
+
+                // 🟢 Todo correcto
+                if (response === "ok") {
+
+                    $("#imagen").removeClass("is-invalid");
+                    $("#imagen").addClass("is-valid");
+
+                    alert("Imagen subida correctamente");
+
+                    // limpiar formulario
+                    $("#formSlider")[0].reset();
+
+                    // recargar lista si tienes CRUD
+                    if (typeof cargar === "function") {
+                        cargar();
+                    }
+                }
+            },
+
+            error: function () {
+                alert("Error en la petición AJAX");
+            }
         });
 
-        document.getElementById("lista").innerHTML = html;
     });
-}
 
-function eliminar(id) {
-
-    let formData = new FormData();
-    formData.append("id", id);
-
-    fetch("slider.php?action=delete", {
-        method: "POST",
-        body: formData
-    })
-    .then(() => cargar());
-}
-
-// cargar al inicio
-cargar();
-
-function editar(id, nombreActual) {
-
-    let nuevoNombre = prompt("Nuevo nombre:", nombreActual);
-
-    if (!nuevoNombre || nuevoNombre.trim() === "") return;
-
-    let formData = new FormData();
-    formData.append("id", id);
-    formData.append("nombre", nuevoNombre);
-
-    fetch("slider.php?action=update", {
-        method: "POST",
-        body: formData
-    })
-    .then(res => res.text())
-    .then(() => {
-        cargar(); // recargar lista
-    });
-}
+});
