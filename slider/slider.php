@@ -2,19 +2,31 @@
 require 'db.php';
 
 //  CREAR
-if ($_GET['action'] === 'create') {
+$action = $_GET['action'] ?? '';
 
-    $nombre = $_POST['nombre'];
-    $imagen = $_FILES['imagen'];
+if ($action === 'create') {
+
+    $nombre = trim($_POST['nombre'] ?? '');
+    $imagen = $_FILES['imagen'] ?? null;
 
     if (!$imagen || $imagen['error'] !== 0) {
         echo "error_archivo";
         exit;
     }
 
+    if ($nombre === '') {
+        echo "nombre_vacio";
+        exit;
+    }
+
+    // VALIDAR MIME REAL
     $permitidos = ['image/jpeg', 'image/png', 'image/webp'];
 
-    if (!in_array($imagen['type'], $permitidos)) {
+    $finfo = finfo_open(FILEINFO_MIME_TYPE);
+    $mime = finfo_file($finfo, $imagen['tmp_name']);
+    finfo_close($finfo);
+
+    if (!in_array($mime, $permitidos)) {
         echo "tipo_no_valido";
         exit;
     }
@@ -24,27 +36,60 @@ if ($_GET['action'] === 'create') {
         exit;
     }
 
-    $hash = md5_file($imagen['tmp_name']);
-    $extension = pathinfo($imagen['name'], PATHINFO_EXTENSION);
+    // EXTENSION SEGURA
+    $extensiones = [
+        'image/jpeg' => 'jpg',
+        'image/png' => 'png',
+        'image/webp' => 'webp'
+    ];
 
+    $extension = $extensiones[$mime];
+
+    $hash = md5_file($imagen['tmp_name']);
     $ruta = "img/" . $hash . "." . $extension;
 
-    $sqlCheck = "SELECT COUNT(*) FROM slider WHERE ruta = :ruta AND activo = true";
+    // 🔍 BUSCAR SI YA EXISTE (activa o inactiva)
+    $sqlCheck = "SELECT id, activo FROM slider WHERE ruta = :ruta LIMIT 1";
     $queryCheck = $db->prepare($sqlCheck);
     $queryCheck->execute(['ruta' => $ruta]);
 
-    if ($queryCheck->fetchColumn() > 0) {
+    $existe = $queryCheck->fetch(PDO::FETCH_ASSOC);
+
+    // 🔴 CASO 1: YA EXISTE Y ESTÁ ACTIVA
+    if ($existe && $existe['activo']) {
         echo "imagen_duplicada";
         exit;
     }
 
-    if (!file_exists("img/")) {
-        mkdir("img/", 0777, true);
+    // 🟡 CASO 2: EXISTE PERO ESTÁ INACTIVA → REACTIVAR
+    if ($existe && !$existe['activo']) {
+
+        $sql = "UPDATE slider SET activo = true, nombre = :nombre WHERE id = :id";
+        $query = $db->prepare($sql);
+        $query->execute([
+            'nombre' => $nombre,
+            'id' => $existe['id']
+        ]);
+
+        echo "reactivada";
+        exit;
     }
 
-    move_uploaded_file($imagen['tmp_name'], $ruta);
+    // 🟢 CASO 3: NO EXISTE → INSERTAR
 
-    $sql = "INSERT INTO slider (nombre, ruta) VALUES (:nombre, :ruta)";
+    if (!file_exists("img/")) {
+        mkdir("img/", 0755, true);
+    }
+
+    // evitar duplicar archivo físico
+    if (!file_exists($ruta)) {
+        if (!move_uploaded_file($imagen['tmp_name'], $ruta)) {
+            echo "error_guardado";
+            exit;
+        }
+    }
+
+    $sql = "INSERT INTO slider (nombre, ruta, activo) VALUES (:nombre, :ruta, true)";
     $query = $db->prepare($sql);
     $query->execute([
         'nombre' => $nombre,

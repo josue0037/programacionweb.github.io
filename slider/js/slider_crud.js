@@ -58,6 +58,12 @@ $(document).ready(function () {
 
                     cargar(); // recargar lista
                 }
+
+                if (response === "reactivada") {
+                    alert("Imagen reactivada correctamente");
+                    $("#formSlider")[0].reset();
+                    cargar();
+                }
             }
         });
 
