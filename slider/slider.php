@@ -67,9 +67,6 @@ if ($_GET['action'] === 'read') {
     exit;
 }
 
-//  fallback (evita errores JSON)
-echo json_encode([]);
-exit;
 
 if ($_GET['action'] === 'delete') {
 

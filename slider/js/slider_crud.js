@@ -79,7 +79,7 @@ function cargar() {
             html += `
                 <div class="mb-3 border p-2">
 
-                    <img src="../${item.ruta}" width="200">
+                    <img src="${item.ruta}" width="200">
 
                     <input 
                         type="text" 
