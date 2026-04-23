@@ -11,6 +11,49 @@ if ($_GET['action'] === 'read') {
     exit;
 }
 
+if ($_GET['action'] === 'mostrar') {
+
+    $id = intval($_GET['id']);
+    $dir = $_GET['dir'];
+
+    if ($dir === 'next') {
+        $query = $db->prepare("SELECT id, ruta FROM slider WHERE id > :id AND activo = true ORDER BY id ASC LIMIT 1");
+    } else {
+        $query = $db->prepare("SELECT id, ruta FROM slider WHERE id < :id AND activo = true ORDER BY id DESC LIMIT 1");
+    }
+
+    $query->bindParam(':id', $id, PDO::PARAM_INT);
+    $query->execute();
+
+    $data = $query->fetch(PDO::FETCH_ASSOC);
+
+    // SI NO HAY RESULTADO → HACER LOOP
+    if (!$data) {
+
+        if ($dir === 'next') {
+            // ir al primero
+            $query = $db->query("SELECT id, ruta FROM slider WHERE activo = true ORDER BY id ASC LIMIT 1");
+        } else {
+            // ir al último
+            $query = $db->query("SELECT id, ruta FROM slider WHERE activo = true ORDER BY id DESC LIMIT 1");
+        }
+
+        $data = $query->fetch(PDO::FETCH_ASSOC);
+    }
+
+    header('Content-Type: application/json');
+
+    echo json_encode([
+        "status" => "ok",
+        "id" => $data['id'],
+        "ruta" => $data['ruta']
+    ]);
+
+    exit;
+}
+
+
+
 session_start();
 
 // Comprobar sesión primero
@@ -74,20 +117,20 @@ if ($action === 'create') {
     $hash = md5_file($imagen['tmp_name']);
     $ruta = "img/" . $hash . "." . $extension;
 
-    // 🔍 BUSCAR SI YA EXISTE (activa o inactiva)
+    // BUSCAR SI YA EXISTE (activa o inactiva)
     $sqlCheck = "SELECT id, activo FROM slider WHERE ruta = :ruta LIMIT 1";
     $queryCheck = $db->prepare($sqlCheck);
     $queryCheck->execute(['ruta' => $ruta]);
 
     $existe = $queryCheck->fetch(PDO::FETCH_ASSOC);
 
-    // 🔴 CASO 1: YA EXISTE Y ESTÁ ACTIVA
+    // CASO 1: YA EXISTE Y ESTÁ ACTIVA
     if ($existe && $existe['activo']) {
         echo "imagen_duplicada";
         exit;
     }
 
-    // 🟡 CASO 2: EXISTE PERO ESTÁ INACTIVA → REACTIVAR
+    // CASO 2: EXISTE PERO ESTÁ INACTIVA → REACTIVAR
     if ($existe && !$existe['activo']) {
 
         $sql = "UPDATE slider SET activo = true, nombre = :nombre WHERE id = :id";
@@ -101,7 +144,7 @@ if ($action === 'create') {
         exit;
     }
 
-    // 🟢 CASO 3: NO EXISTE → INSERTAR
+    // CASO 3: NO EXISTE → INSERTAR
 
     if (!file_exists("img/")) {
         mkdir("img/", 0755, true);
@@ -148,7 +191,7 @@ if ($_GET['action'] === 'delete') {
         exit;
     }
 
-    // 🔴 HARD DELETE (borra TODO)
+    // HARD DELETE (borra TODO)
     if ($modo === 'hard') {
 
         // borrar archivo físico
@@ -165,7 +208,7 @@ if ($_GET['action'] === 'delete') {
         exit;
     }
 
-    // 🟡 SOFT DELETE (solo desactiva)
+    // SOFT DELETE (solo desactiva)
     if ($modo === 'soft') {
 
         $sql = "UPDATE slider SET activo = false WHERE id = :id";
