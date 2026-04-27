@@ -35,7 +35,7 @@
                     <ul class="list-unstyled small">
                         <li class="mt-3"><a href="../index.html"class="btn btn-toggle w-100 text-start" data-bs-toggle="collapse" data-bs-target="#menu1">Inicio</a></li>
                         <li class="mt-3"><a href="slider.html">Slider</a></li>
-                        <li class="mt-3"><a href="gestionar_slider.html">Modificar</a></li>                
+                        <li class="mt-3"><a href="gestionar_slider.php">Modificar</a></li>                
                     </ul>
                 </div>
             </li>

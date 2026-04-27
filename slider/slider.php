@@ -124,40 +124,19 @@ if ($action === 'create') {
     $rutaBD = "img/" . $nombreArchivo; // ruta para HTML
     
 
-    // BUSCAR SI YA EXISTE (activa o inactiva)
+    // BUSCAR SI YA EXISTE
     $sqlCheck = "SELECT id, activo FROM slider WHERE ruta = :ruta LIMIT 1";
     $queryCheck = $db->prepare($sqlCheck);
     $queryCheck->execute(['ruta' => $rutaBD]);
 
     $existe = $queryCheck->fetch(PDO::FETCH_ASSOC);
 
-    // CASO 1: YA EXISTE Y ESTÁ ACTIVA
-    if ($existe && $existe['activo']) {
-        echo "imagen_duplicada";
-        exit;
+    // CREAR CARPETA
+    if (!file_exists(__DIR__ . "/img")) {
+        mkdir(__DIR__ . "/img", 0755, true);
     }
 
-    // CASO 2: EXISTE PERO ESTÁ INACTIVA → REACTIVAR
-    if ($existe && !$existe['activo']) {
-
-        $sql = "UPDATE slider SET activo = true, nombre = :nombre WHERE id = :id";
-        $query = $db->prepare($sql);
-        $query->execute([
-            'nombre' => $nombre,
-            'id' => $existe['id']
-        ]);
-
-        echo "reactivada";
-        exit;
-    }
-
-    // CASO 3: NO EXISTE → INSERTAR
-
-    if (!file_exists(__DIR__ . "/img")){
-        mkdir("img/", 0755, true);
-    }
-
-    // evitar duplicar archivo físico
+    // GUARDAR ARCHIVO
     if (!file_exists($rutaServidor)) {
         if (!move_uploaded_file($imagen['tmp_name'], $rutaServidor)) {
             echo "error_guardado";
@@ -165,6 +144,7 @@ if ($action === 'create') {
         }
     }
 
+    // INSERTAR BD
     $sql = "INSERT INTO slider (nombre, ruta, activo) VALUES (:nombre, :ruta, true)";
     $query = $db->prepare($sql);
     $query->execute([
