@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 require 'db.php';
 
 if ($_GET['action'] === 'read') {
@@ -57,7 +60,7 @@ if ($_GET['action'] === 'mostrar') {
 session_start();
 
 // NO redirecciones en AJAX
-if(!isset($_SESSION["email"])){
+if(!isset($_SESSION["username"])){
     echo "no_sesion";
     exit;
 }
@@ -120,9 +123,13 @@ if ($action === 'create') {
     
     $nombreArchivo = $hash . "." . $extension;
 
-    $rutaServidor = __DIR__ . "/img/" . $nombreArchivo; // ruta física
+    $rutaServidor = __DIR__ . "/img/" . $hash . "." . $extension;// ruta física
     $rutaBD = "img/" . $nombreArchivo; // ruta para HTML
-    
+
+    if (file_exists($rutaServidor)) {
+        echo "imagen_duplicada";
+        exit;
+    }
 
     // BUSCAR SI YA EXISTE
     $sqlCheck = "SELECT id, activo FROM slider WHERE ruta = :ruta LIMIT 1";
@@ -130,6 +137,25 @@ if ($action === 'create') {
     $queryCheck->execute(['ruta' => $rutaBD]);
 
     $existe = $queryCheck->fetch(PDO::FETCH_ASSOC);
+
+    if ($existe && $existe['activo']) {
+        echo "imagen_duplicada";
+        exit;
+    }
+
+    // EXISTE PERO INACTIVA → REACTIVAR
+    if ($existe && !$existe['activo']) {
+
+        $sql = "UPDATE slider SET activo = true, nombre = :nombre WHERE id = :id";
+        $query = $db->prepare($sql);
+        $query->execute([
+            'nombre' => $nombre,
+            'id' => $existe['id']
+        ]);
+
+        echo "reactivada";
+        exit;
+    }
 
     // CREAR CARPETA
     if (!file_exists(__DIR__ . "/img")) {
