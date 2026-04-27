@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    // 🔥 Ocultar formulario si NO es admin
+    // Ocultar formulario si NO es admin
     if (USER_ROLE !== "admin") {
         $("#formSlider").hide();
     }
@@ -28,6 +28,17 @@ $(document).ready(function () {
             success: function (response) {
 
                 response = response.trim();
+
+                if (response === "no_sesion") {
+                    alert("Sesión expirada");
+                    window.location.href = "../Jserrano/login.html";
+                    return;
+                }
+
+                if (response === "no_autorizado") {
+                    alert("No tienes permisos");
+                    return;
+                }
 
                 if (response === "imagen_duplicada") {
                     $("#imagen").addClass("is-invalid");
@@ -91,7 +102,7 @@ function cargar() {
                     <img src="${item.ruta}" width="200">
             `;
 
-            // 🔥 SOLO ADMIN PUEDE EDITAR
+            // SOLO ADMIN PUEDE EDITAR
             if (USER_ROLE === "admin") {
 
                 html += `

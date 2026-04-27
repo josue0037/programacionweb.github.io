@@ -62,8 +62,7 @@ if(!isset($_SESSION["username"])){
     exit;
 }
 
-// Comprobar si el usuario es administrador
-session_start();
+
 
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     echo "no_autorizado";
