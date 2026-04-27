@@ -127,7 +127,7 @@ if ($action === 'create') {
     // BUSCAR SI YA EXISTE (activa o inactiva)
     $sqlCheck = "SELECT id, activo FROM slider WHERE ruta = :ruta LIMIT 1";
     $queryCheck = $db->prepare($sqlCheck);
-    $queryCheck->execute(['ruta' => $ruta]);
+    $queryCheck->execute(['ruta' => $rutaBD]);
 
     $existe = $queryCheck->fetch(PDO::FETCH_ASSOC);
 
@@ -153,13 +153,13 @@ if ($action === 'create') {
 
     // CASO 3: NO EXISTE → INSERTAR
 
-    if (!file_exists("img/")) {
+    if (!file_exists(__DIR__ . "/img")){
         mkdir("img/", 0755, true);
     }
 
     // evitar duplicar archivo físico
-    if (!file_exists($ruta)) {
-        if (!move_uploaded_file($imagen['tmp_name'], $ruta)) {
+    if (!file_exists($rutaServidor)) {
+        if (!move_uploaded_file($imagen['tmp_name'], $rutaServidor)) {
             echo "error_guardado";
             exit;
         }
@@ -169,7 +169,7 @@ if ($action === 'create') {
     $query = $db->prepare($sql);
     $query->execute([
         'nombre' => $nombre,
-        'ruta' => $ruta
+        'ruta' => $rutaBD
     ]);
 
     echo "ok";
