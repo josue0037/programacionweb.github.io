@@ -175,6 +175,17 @@ function login() {
             if (result === "login_correcto") {
                 window.location.href = "../index.html";
             }
+
+            if (response === "no_sesion") {
+                alert("Sesión expirada");
+                window.location.href = "../Jserrano/login.html";
+                return;
+            }
+
+            if (response === "no_autorizado") {
+                alert("No tienes permisos");
+                return;
+            }
         },
 
         error: function() {

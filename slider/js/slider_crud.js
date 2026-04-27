@@ -29,17 +29,6 @@ $(document).ready(function () {
 
                 response = response.trim();
 
-                if (response === "no_sesion") {
-                    alert("Sesión expirada");
-                    window.location.href = "../Jserrano/login.html";
-                    return;
-                }
-
-                if (response === "no_autorizado") {
-                    alert("No tienes permisos");
-                    return;
-                }
-
                 if (response === "imagen_duplicada") {
                     $("#imagen").addClass("is-invalid");
                     $("#imgError").text("Esta imagen ya existe.");
