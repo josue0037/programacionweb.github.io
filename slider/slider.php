@@ -117,7 +117,12 @@ if ($action === 'create') {
     $extension = $extensiones[$mime];
 
     $hash = md5_file($imagen['tmp_name']);
-    $ruta = "img/" . $hash . "." . $extension;
+    
+    $nombreArchivo = $hash . "." . $extension;
+
+    $rutaServidor = __DIR__ . "/img/" . $nombreArchivo; // ruta física
+    $rutaBD = "img/" . $nombreArchivo; // ruta para HTML
+    
 
     // BUSCAR SI YA EXISTE (activa o inactiva)
     $sqlCheck = "SELECT id, activo FROM slider WHERE ruta = :ruta LIMIT 1";
