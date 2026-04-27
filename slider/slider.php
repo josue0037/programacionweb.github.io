@@ -57,7 +57,7 @@ if ($_GET['action'] === 'mostrar') {
 session_start();
 
 // NO redirecciones en AJAX
-if(!isset($_SESSION["username"])){
+if(!isset($_SESSION["email"])){
     echo "no_sesion";
     exit;
 }
