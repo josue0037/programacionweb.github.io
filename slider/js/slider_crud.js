@@ -18,7 +18,7 @@ $(document).ready(function () {
         formData.append("imagen", imagen);
 
         $.ajax({
-            url: "slider.php?action=create", // IMPORTANTE
+            url: "../slider.php?action=create", // IMPORTANTE
             type: "POST",
             data: formData,
             processData: false,
