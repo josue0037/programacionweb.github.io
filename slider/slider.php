@@ -56,17 +56,20 @@ if ($_GET['action'] === 'mostrar') {
 
 session_start();
 
-// Comprobar sesión primero
+// NO redirecciones en AJAX
 if(!isset($_SESSION["username"])){
-    header("location: ../Jserrano/login.php");
+    echo "no_sesion";
     exit;
 }
 
+// SOLO proteger acciones sensibles
+$action = $_GET['action'] ?? '';
 
-
-if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
-    echo "no_autorizado";
-    exit;
+if (in_array($action, ['create', 'update', 'delete'])) {
+    if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+        echo "no_autorizado";
+        exit;
+    }
 }
 
 //  CREAR
