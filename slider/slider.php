@@ -2,7 +2,7 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-require '../Jserrano/db.php';
+require 'db.php';
 
 if ($_GET['action'] === 'read') {
 
