@@ -14,6 +14,38 @@ if ($_GET['action'] === 'read') {
     exit;
 }
 
+if ($_GET['action'] === 'mostrar_inicial') {
+
+    $query = $db->query("
+        SELECT id, ruta 
+        FROM slider 
+        WHERE activo = true 
+        ORDER BY id ASC 
+        LIMIT 1
+    ");
+
+    $data = $query->fetch(PDO::FETCH_ASSOC);
+
+    header('Content-Type: application/json');
+
+    if ($data) {
+
+        echo json_encode([
+            "status" => "ok",
+            "id" => $data['id'],
+            "ruta" => $data['ruta']
+        ]);
+
+    } else {
+
+        echo json_encode([
+            "status" => "vacio"
+        ]);
+    }
+
+    exit;
+}
+
 if ($_GET['action'] === 'mostrar') {
 
     $id = intval($_GET['id']);
@@ -46,11 +78,20 @@ if ($_GET['action'] === 'mostrar') {
 
     header('Content-Type: application/json');
 
-    echo json_encode([
-        "status" => "ok",
-        "id" => $data['id'],
-        "ruta" => $data['ruta']
-    ]);
+    if ($data) {
+
+        echo json_encode([
+            "status" => "ok",
+            "id" => $data['id'],
+            "ruta" => $data['ruta']
+        ]);
+
+    } else {
+
+        echo json_encode([
+            "status" => "vacio"
+        ]);
+    }
 
     exit;
 }
