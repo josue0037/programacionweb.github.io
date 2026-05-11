@@ -7,9 +7,9 @@ $_SESSION["username"] = "juan";
 $_SESSION["login_time"] = time();
 
 // index.php
-require_once 'db.php'; // Traemos el código del otro archivo
+//require_once 'db.php'; // Traemos el código del otro archivo
 
-//require_once 'dbpgs.php'; // Traemos el código del otro archivo
+require_once 'dbpgs.php'; // Traemos el código del otro archivo
 
 
 //  Obtenemos los datos del formulario
