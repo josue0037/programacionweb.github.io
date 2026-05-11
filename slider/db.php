@@ -1,7 +1,7 @@
 <?php
 
 // PostgreSQL
-//$db = new PDO("pgsql:host=localhost;dbname=tu_db", "user", "password");
+$db = new PDO("pgsql:host=localhost;dbname=jserrano_db", "jserrano", "P@ssw0rd");
 
 // MariaDB (comenta el de arriba si usas este)
 $db = new PDO("mysql:host=localhost;dbname=jserrano_db", "jserrano", "P@ssw0rd");
